@@ -9,5 +9,8 @@ namespace LibraryManagementSystemAPI.AbstractServices
         Task<Book> AddBookAsync(Book book);
         Task<Book> UpdateBookAsync(int id,Book bookToUpdate);
         Task DeleteBookAsync(int id);
+
+        Task RentBook(int bookId, int userId = 1);
+
     }
 }

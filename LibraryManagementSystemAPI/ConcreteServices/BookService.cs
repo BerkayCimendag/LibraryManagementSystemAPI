@@ -47,22 +47,36 @@ namespace LibraryManagementSystemAPI.ConcreteServices
             return book;
         }
 
+        public async Task RentBook(int bookId, int userId = 1)
+        {
+            UsersBook usersBook = new();
+
+            usersBook.UserId = userId;
+            usersBook.BookId = bookId;
+            var book = await _context.Books.FirstOrDefaultAsync(x => x.Id == bookId);
+            if (!book.IsDeleted && !book.IsRented && book!=null)
+            {
+                book.IsRented = true;
+                _context.Books.Update(book);
+
+                await _context.UsersBooks.AddAsync(usersBook);
+                await _context.SaveChangesAsync();
+            }
+        }
+
         public async Task<Book> UpdateBookAsync(int id,Book bookToUpdate)
         {
             var book = await _context.Books.FindAsync(id);
 
-            //book.Id = bookToUpdate.Id;
-            //book.Author = bookToUpdate.Author;
-            //book.RentedDay = bookToUpdate.RentedDay;
-            //book.MaxRentDay = bookToUpdate.MaxRentDay;
-            //book.IsRented = bookToUpdate.IsRented;
-            //book.UserId = bookToUpdate.UserId;
-            //book.DailyPenaltyFee = bookToUpdate.DailyPenaltyFee;
-            //book.Title = bookToUpdate.Title;
-            //book.User = bookToUpdate.User;
-            //book.ReleaseDate = bookToUpdate.ReleaseDate;
-            //book.PageCount = bookToUpdate.PageCount;
-            //book.IsDeleted = bookToUpdate.IsDeleted;
+            book.Id = bookToUpdate.Id;
+            book.Author = bookToUpdate.Author;
+            book.MaxRentDay = bookToUpdate.MaxRentDay;
+            book.IsRented = bookToUpdate.IsRented;
+            book.DailyPenaltyFee = bookToUpdate.DailyPenaltyFee;
+            book.Title = bookToUpdate.Title;
+            book.ReleaseDate = bookToUpdate.ReleaseDate;
+            book.PageCount = bookToUpdate.PageCount;
+            book.IsDeleted = bookToUpdate.IsDeleted;
 
             _context.Books.Update(book);
             await _context.SaveChangesAsync();

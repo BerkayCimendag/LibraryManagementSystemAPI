@@ -1,3 +1,5 @@
+using LibraryManagementSystemAPI.AbstractServices;
+using LibraryManagementSystemAPI.ConcreteServices;
 using LibraryManagementSystemAPI.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("LibaryConnection")));
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -10,11 +10,9 @@ namespace LibraryManagementSystemAPI.Entities
         public DateTime ReleaseDate { get; set; }
         public double DailyPenaltyFee { get; set; }
         public int MaxRentDay { get; set; }
-        public DateTime RentedDay { get; set; }
+     
         public int PageCount { get; set; }
         public bool IsRented { get; set; }
         public bool IsDeleted { get; set; }
-        public int UserId { get; set; }
-        public User User { get; set; }
     }
 }
